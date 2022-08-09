@@ -29,12 +29,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = db.Ping()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	var res []adapters.AdapterResultSet
 	err = db.Select(&res, adapter.GetSql("Backend_Anwendung"))
 

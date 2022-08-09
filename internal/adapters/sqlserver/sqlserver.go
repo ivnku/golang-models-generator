@@ -3,11 +3,12 @@ package sqlserver
 import (
 	"fmt"
 	_ "github.com/denisenkom/go-mssqldb"
-	"github.com/jmoiron/sqlx"
-	"models-generator/config"
+	"models-generator/internal/adapters"
 )
 
-type SqlServerAdapter struct{}
+type SqlServerAdapter struct {
+	adapters.Adapter
+}
 
 func (a *SqlServerAdapter) GetTypesMapping() map[string]string {
 	return map[string]string{
@@ -44,13 +45,4 @@ func (a *SqlServerAdapter) GetSql(table string) string {
 		%s
 		ORDER BY tab.name
 	`, tableCond)
-}
-
-func (a *SqlServerAdapter) GetDB(config *config.AppConfig) (*sqlx.DB, error) {
-	db, err := sqlx.Connect("sqlserver", config.Connection.Dsn)
-	if err != nil {
-		err = fmt.Errorf("couldn't create db connection! Check your dsn string in the config. Error: %s", err.Error())
-		return nil, err
-	}
-	return db, nil
 }

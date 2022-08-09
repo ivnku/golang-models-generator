@@ -2,6 +2,7 @@ package config
 
 type AppConfig struct {
 	Connection struct {
-		Dsn string `yaml:"dsn"`
+		Driver string `yaml:"driver"`
+		Dsn    string `yaml:"dsn"`
 	}
 }
