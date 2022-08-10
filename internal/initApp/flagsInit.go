@@ -12,7 +12,7 @@ func InitFlags() *Flags {
 	f := &Flags{
 		Table: flag.String(
 			"t",
-			"none",
+			"",
 			"the name of the table you need to create a model for. If no name specified - generate models for all tables",
 		),
 		Path: flag.String(

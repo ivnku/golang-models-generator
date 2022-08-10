@@ -3,11 +3,11 @@ package sqlserver
 import (
 	"fmt"
 	_ "github.com/denisenkom/go-mssqldb"
-	"models-generator/internal/adapters"
+	"models-generator/internal/adapters/base"
 )
 
 type SqlServerAdapter struct {
-	adapters.Adapter
+	base.Adapter
 }
 
 func (a *SqlServerAdapter) GetTypesMapping() map[string]string {
