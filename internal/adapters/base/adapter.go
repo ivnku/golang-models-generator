@@ -28,7 +28,7 @@ func (a *Adapter) GetDB(config *config.AppConfig) (*sqlx.DB, error) {
 }
 
 type AdapterResultSet struct {
-	Name             string
+	Table            string
 	Column           string
 	Type             string
 	ReferencedTable  sql.NullString `db:"referenced_table"`

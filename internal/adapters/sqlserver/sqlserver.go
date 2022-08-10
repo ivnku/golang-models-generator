@@ -31,7 +31,7 @@ func (a *SqlServerAdapter) GetSql(table string) string {
 
 	return fmt.Sprintf(`
 		SELECT
-			tab.name, col.name AS [column], type.name as type, col.is_nullable, col.max_length, col.precision, col.scale, 
+			tab.name as [table], col.name AS [column], type.name as type, col.is_nullable, col.max_length, col.precision, col.scale, 
 			CASE WHEN tab2.name IS NULL THEN 0 ELSE 1 END as is_foreign_key, i.is_primary_key, tab2.name AS referenced_table, 
 			col2.name AS referenced_column
 		FROM sys.tables tab
