@@ -13,6 +13,9 @@ type SqlServerAdapter struct {
 func (a *SqlServerAdapter) GetTypesMapping() map[string]string {
 	return map[string]string{
 		"int":       "int",
+		"smallint":  "int",
+		"tinyint":   "int",
+		"bigint":    "int",
 		"varchar":   "string",
 		"bit":       "bool",
 		"decimal":   "float32",
@@ -39,10 +42,10 @@ func (a *SqlServerAdapter) GetSql(table string) string {
 		LEFT JOIN sys.foreign_key_columns foreignCol ON col.column_id = foreignCol.parent_column_id AND foreignCol.parent_object_id = tab.object_id
 		LEFT JOIN sys.tables tab2 ON tab2.object_id = foreignCol.referenced_object_id
 		LEFT JOIN sys.columns col2 ON col2.column_id = foreignCol.referenced_column_id AND col2.object_id = tab2.object_id
-		LEFT JOIN sys.index_columns ic ON col.column_id = ic.column_id AND ic.object_id = tab.object_id
+		LEFT JOIN sys.index_columns ic ON col.column_id = ic.column_id AND ic.object_id = tab.object_id AND ic.index_id=1
 		LEFT JOIN sys.indexes i ON ic.index_id=i.index_id AND i.object_id = tab.object_id
 		INNER JOIN sys.types type ON col.system_type_id = type.system_type_id
 		%s
-		ORDER BY tab.name
+		ORDER BY tab.name ASC, i.is_primary_key DESC, type.name DESC
 	`, tableCond)
 }
