@@ -1,5 +1,7 @@
-package {{ .Package }}
+package {{ .PackageName }}
 
 type {{ .ModelName }} struct {
-    {{ range $field := .Columns }} {{ $field.Name }} {{ $field.Type }} {{ $field.Tag }} {{ end }}
+    {{- range $field := .Columns }}
+        {{ $field.Name }} {{ $field.Type }} {{ $field.Tag }}
+    {{- end }}
 }

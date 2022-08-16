@@ -1,3 +1,5 @@
 connection:
   driver: 'db_driver'
   dsn: 'your_dsn_here'
+templatePath: './model.txt'
+generatedModelsPath: './models'

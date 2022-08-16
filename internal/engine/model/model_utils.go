@@ -44,6 +44,9 @@ func GetCamelCaseName(value string) string {
 
 func GetType(columnData base.AdapterResultSet, typesMapping map[string]string) string {
 	mappedType := typesMapping[columnData.Type]
+	if columnData.IsPrimaryKey.Bool && mappedType == "int" {
+		return "uint64"
+	}
 	if columnData.IsNullable {
 		switch mappedType {
 		case "int":

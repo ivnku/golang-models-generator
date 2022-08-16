@@ -3,8 +3,8 @@ package initApp
 import (
 	"fmt"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 	"models-generator/config"
+	"os"
 )
 
 func InitConfig(path string) (*config.AppConfig, error) {
@@ -12,7 +12,7 @@ func InitConfig(path string) (*config.AppConfig, error) {
 		path = "./config.yml"
 	}
 
-	yamlFile, err := ioutil.ReadFile(path)
+	yamlFile, err := os.ReadFile(path)
 	if err != nil {
 		err = fmt.Errorf("error parsing YAML file: %s\n", err)
 		return nil, err
@@ -25,6 +25,5 @@ func InitConfig(path string) (*config.AppConfig, error) {
 		return nil, err
 	}
 
-	fmt.Printf("Result: %v\n", appConfig)
 	return appConfig, nil
 }
