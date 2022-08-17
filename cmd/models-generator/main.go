@@ -1,17 +1,24 @@
 package main
 
 import (
-	"flag"
-	"fmt"
+	_ "github.com/denisenkom/go-mssqldb"
+	"log"
+	"models-generator/internal/engine"
+	"models-generator/internal/initApp"
 	_ "os"
 )
 
 func main() {
-	tableName := flag.String(
-		"t",
-		"none",
-		"a name of the table you need to create a model for. If no name specified - generate models for all tables",
-	)
-	flag.Parse()
-	fmt.Printf("flags are: %v", *tableName)
+	flags := initApp.InitFlags()
+	config, err := initApp.InitConfig(*flags.ConfigPath)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = engine.Generate(config, flags)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
