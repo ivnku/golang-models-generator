@@ -97,13 +97,17 @@ func groupResultSet(packageName string, data []base.AdapterResultSet, adapter *b
 					Tag:  model.GetTag(row),
 				},
 			}
-			grouped[row.Table] = &model.ModelData{packageName, model.GetCamelCaseName(row.Table), columns}
+			modelData := &model.ModelData{columns, make(map[string]struct{}), packageName, model.GetCamelCaseName(row.Table)}
+			model.AddImport(modelData, &columns[0])
+			grouped[row.Table] = modelData
 		} else {
 			column := model.ColumnData{
 				Name: model.GetCamelCaseName(row.Column),
 				Type: model.GetType(row, (*adapter).GetTypesMapping()),
 				Tag:  model.GetTag(row),
 			}
+			modelData := grouped[row.Table]
+			model.AddImport(modelData, &column)
 			grouped[row.Table].Columns = append(grouped[row.Table].Columns, column)
 		}
 	}

@@ -10,9 +10,10 @@ import (
 )
 
 type ModelData struct {
+	Columns     []ColumnData
+	Imports     map[string]struct{}
 	PackageName string
 	ModelName   string
-	Columns     []ColumnData
 }
 
 type ColumnData struct {
@@ -69,4 +70,20 @@ func GetType(columnData base.AdapterResultSet, typesMapping map[string]string) s
 
 func GetTag(columnData base.AdapterResultSet) string {
 	return fmt.Sprintf("`db:\"%s\"`", columnData.Column)
+}
+
+var typesWithImport = map[string]string{
+	"sql.NullInt32":   "database/sql",
+	"sql.NullString":  "database/sql",
+	"sql.NullBool":    "database/sql",
+	"sql.NullFloat64": "database/sql",
+	"sql.NullTime":    "database/sql",
+	"time.Time":       "time",
+}
+
+func AddImport(model *ModelData, column *ColumnData) {
+	typeImport, ok := typesWithImport[column.Type]
+	if _, exist := model.Imports[typeImport]; !exist && ok {
+		model.Imports[typeImport] = struct{}{}
+	}
 }

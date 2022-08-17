@@ -1,3 +1,4 @@
-bin/
+bin/*
+!bin/modgen.exe
 .idea/
 config/config.yml

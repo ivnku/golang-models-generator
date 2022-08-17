@@ -1,5 +1,13 @@
 package {{ .PackageName }}
 
+{{ if .Imports }}
+import (
+    {{- range $key, $value := .Imports }}
+        "{{ $key }}"
+    {{- end }}
+)
+{{ end }}
+
 type {{ .ModelName }} struct {
     {{- range $field := .Columns }}
         {{ $field.Name }} {{ $field.Type }} {{ $field.Tag }}
